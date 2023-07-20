@@ -7,17 +7,32 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Helper\JWTToken;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class UserController extends Controller
 {
 
-    public function RegistrationPage(){
+    public function RegistrationPage():View{
         return view('pages.auth.registration-page');
     }
 
 
-    public function LoginPage(){
+    public function LoginPage():View{
         return view('pages.auth.login-page');
+    }
+
+    function SendOtpPage():View{
+        return view('pages.auth.send-otp-page');
+    }
+
+
+    function VerifyOTPPage():View{
+        return view('pages.auth.verify-otp-page');
+    }
+
+
+    function ResetPasswordPage():View{
+        return view('pages.auth.reset-pass-page');
     }
 
 

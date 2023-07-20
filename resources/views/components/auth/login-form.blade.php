@@ -40,9 +40,10 @@
             else{
                 showLoader();
                 let res=await axios.post("/user-login",{email:email, password:password});
-                hideLoader()
-                if(res.status===200 && res.data['status']==='success'){
 
+                hideLoader()
+                if(res.status===200 && res.data['status']==='Success'){
+                    window.location.href="/dashboard";
                 }
                 else{
                     errorToast(res.data['message']);

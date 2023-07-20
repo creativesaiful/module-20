@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,3 +30,8 @@ Route::post('reset-password', [UserController::class, "resetPassword"])->middlew
 
 Route::get('userRegistration', [UserController::class, 'RegistrationPage'] );
 Route::get('userLogin', [UserController::class, 'LoginPage'] );
+Route::get('/sendOtp',[UserController::class,'SendOtpPage']);
+Route::get('/verifyOtp',[UserController::class,'VerifyOTPPage']);
+Route::get('/resetPassword',[UserController::class,'ResetPasswordPage']);
+
+Route::get('/dashboard',[DashboardController::class,'DashboardPage']);
