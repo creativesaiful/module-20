@@ -20,3 +20,12 @@ Route::get('/', function () {
 Route::post('user-registration', [UserController::class, "userRegistration"]);
 Route::post('user-login', [UserController::class, "userLogin"]);
 Route::post('send-otp', [UserController::class, "SendOTPCode"]);
+Route::post('verify-otp', [UserController::class, "verifyOTP"]);
+
+Route::post('reset-password', [UserController::class, "resetPassword"])->middleware([TokenVerificationMiddleware::class]);
+
+
+//Page route
+
+Route::get('userRegistration', [UserController::class, 'RegistrationPage'] );
+Route::get('userLogin', [UserController::class, 'LoginPage'] );

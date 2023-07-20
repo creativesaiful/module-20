@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+
+    public function RegistrationPage(){
+        return view('pages.auth.registration-page');
+    }
+
+
+    public function LoginPage(){
+        return view('pages.auth.login-page');
+    }
+
+
     //User registration
 
     public function userRegistration(Request $request){
@@ -84,5 +95,53 @@ class UserController extends Controller
                     "Message"=> "Unauthorized"
                 ], 401);
             }
+    }
+
+
+
+    public function verifyOTP(Request $request){
+        $email = $request->input('email');
+        $otp = $request->input('otp');
+        $result = User::where('email', $email)->where('otp', $otp)->count();
+
+        if($result == 1){
+            User::where('email', $email)->update(['otp', '0']);
+            $token = JWTToken::createJWTokenForPasswordReset($request->input('email'));
+            return response()->json([
+                "status"=>"Success",
+                "Message"=>"OTP verify successfully",
+                "token"=>$token
+            ], 200);
+
+        }else{
+            return response()->json([
+                "status"=>"Failed",
+                "Message"=> "Unauthorized"
+            ], 401);
+        }
+    }
+
+
+    public function resetPassword(Request $request){
+        $email = $request->header('email');
+        $password = $request->input('password');
+
+
+        try {
+
+            User::where('email', "=" ,$email)
+            ->update(['password'=> $password]);
+
+            return response()->json([
+                "status"=>"Success",
+                "Message"=>"password reset successfully",
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                "status"=>"Failed",
+                "Message"=> $e
+            ], 401);
+        }
     }
 }
